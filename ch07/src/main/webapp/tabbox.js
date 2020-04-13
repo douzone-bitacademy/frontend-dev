@@ -1,23 +1,17 @@
 // jQuery 버젼
 var TabBox = {
 	init: function(){
-		window.addEventListener('load', this._onWindowLoad);		
+		$(this._init);		
 	},	
-	_onWindowLoad: function(){
-		var divTabBox = document.getElementsByClassName('tab-box')[0];
-		var ulTabBox = divTabBox.childNodes[1];
-		var liTabs = ulTabBox.getElementsByTagName('li');
-		
-		for(var i = 0; i < liTabs.length; i++){
-			liTabs[i].addEventListener('click', TabBox._onTabClicked);
-		}
+	_init: function(){
+		$('.tab-box li').click(TabBox._changeTab);
+		TabBox._changeTab();
 	},
-	_onTabClicked: function(){
-		//unselect
-		var liSelecetds = document.getElementsByClassName('selected');
-		(liSelecetds.length == 1) && (liSelecetds[0].className = '');		
-
-		// seclect
-		this.className = 'selected';
+	_changeTab: function(){
+		$('.tab-box li.selected').removeClass('selected');
+		
+		var $liTab = (this == TabBox) ?	$('.tab-box li:first-child') : $(this);
+		$('.tab-box div').text($liTab.data('no') + "의 탭뷰입니다.");
+		$liTab.addClass('selected');
 	}	
 }
